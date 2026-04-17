@@ -11,9 +11,6 @@ const ADMIN_NUMBERS = [
   "+12066058551",
 ];
 
-const GREETING_AUDIO_URL =
-  "https://d362unqrwzvzrb.cloudfront.net/hotline-greeting.wav";
-
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -116,8 +113,16 @@ async function getForwardNumber(env) {
 
 function publicHotlineXml(forwardNumber) {
   return `
-    <Play>${GREETING_AUDIO_URL}</Play>
-    <Pause length="1"/>
+    <Say voice="alice">
+      Thank you for calling the Partner For Care caregiver support hotline.
+      This line is here to provide general advice and support for caregivers.
+      All of our team members are volunteers.
+      After this message, your call will be forwarded to one of our volunteers.
+      They may answer simply with a hello, as they are taking your call on their personal phone.
+      If they are unable to answer, you may hear a standard voicemail greeting.
+      Please leave your name and number, and someone will return your call as soon as possible.
+      Thank you for calling, and please stay on the line while we connect you.
+    </Say>
     <Dial callerId="${TWILIO_NUMBER}" answerOnBridge="true" timeout="25">
       ${forwardNumber}
     </Dial>
